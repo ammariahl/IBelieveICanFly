@@ -24,32 +24,47 @@ public class Eagle extends Bird implements Fly {
 
     @Override
     public void takeOff() {
-        System.out.println(this.getName() + " takes off in the sky.");
+
+        if (this.flying == false && this.altitude == 0) {
+            this.flying = true;
+            System.out.println(this.getName() + " takes off in the sky.");
+        }
     }
 
     @Override
     public void ascend(int altitude) {
-        System.out.println(this.getName() + " flies upward, altitude: " + altitude);
+
+        if (this.flying) {
+            this.altitude = Math.min(this.altitude + altitude, 325);
+            System.out.println(this.getName() + " flies upward, altitude: " + this.altitude);
+        }
     }
 
     @Override
     public void glide() {
+
+        this.flying = true;
         System.out.println("glides into the air.");
     }
 
     @Override
     public void descend(int altitude) {
-        System.out.println(this.getName() + " flies downward, altitude: " + altitude);
+
+        if (this.flying) {
+            this.altitude = Math.max(this.altitude - altitude, 0);
+            System.out.println(this.getName() + " flies downward, altitude: " + this.altitude);
+        }
     }
 
     @Override
     public void land() {
-
-        if (this.getAltitude() != 0) {
-            System.out.println(this.getName() + " is too high, it can't land.");
+        if (this.flying && this.altitude >= 0 && this.altitude <= 1) {
+            this.flying = false;
+            this.altitude = 0;
+            System.out.println(this.getName() + " lands on the ground.");
         }
         else {
-            System.out.println(this.getName() + " lands on the ground.");
+            System.out.println(this.getName() + " is too high, it can't land.");
         }
       }
 }
